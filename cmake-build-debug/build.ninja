@@ -2330,6 +2330,76 @@ build tools/llvm-my-detector: CXX_EXECUTABLE_LINKER__llvm-my-detector_Debug tool
   TARGET_FILE = tools/llvm-my-detector
   TARGET_PDB = llvm-my-detector.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target llvm-my-muvi
+
+
+#############################################
+# Order-only phony target for llvm-my-muvi
+
+build cmake_object_order_depends_target_llvm-my-muvi: phony || cmake_object_order_depends_target_dganalysis cmake_object_order_depends_target_dgcda cmake_object_order_depends_target_dgdda cmake_object_order_depends_target_dgllvmcda cmake_object_order_depends_target_dgllvmdda cmake_object_order_depends_target_dgllvmdg cmake_object_order_depends_target_dgllvmforkjoin cmake_object_order_depends_target_dgllvmpta cmake_object_order_depends_target_dgllvmsdg cmake_object_order_depends_target_dgllvmslicer cmake_object_order_depends_target_dgllvmthreadregions cmake_object_order_depends_target_dgpta cmake_object_order_depends_target_dgsdg
+
+build tools/CMakeFiles/llvm-my-muvi.dir/llvm-muvi-detector.cpp.o: CXX_COMPILER__llvm-my-muvi_Debug /Users/wzxpc/Downloads/myproject/dg-master/tools/llvm-muvi-detector.cpp || cmake_object_order_depends_target_llvm-my-muvi
+  DEFINES = -DDEBUG_ENABLED -DENABLE_CFG
+  DEP_FILE = tools/CMakeFiles/llvm-my-muvi.dir/llvm-muvi-detector.cpp.o.d
+  FLAGS = -std=c++14 -fno-rtti -Wall -Wextra -fno-exceptions -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fcolor-diagnostics   -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -std=c++14
+  INCLUDES = -I/Users/wzxpc/Downloads/myproject/dg-master/include -I/Users/wzxpc/Downloads/myproject/dg-master/lib -I/Users/wzxpc/Downloads/myproject/dg-master/tools/include -I/Users/wzxpc/Downloads/myproject/dg-master/cmake-build-debug/tools -I/Users/wzxpc/Downloads/jsoncpp-master/include/json -isystem /opt/homebrew/opt/llvm@11/include
+  OBJECT_DIR = tools/CMakeFiles/llvm-my-muvi.dir
+  OBJECT_FILE_DIR = tools/CMakeFiles/llvm-my-muvi.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target llvm-my-muvi
+
+
+#############################################
+# Link the executable tools/llvm-my-muvi
+
+build tools/llvm-my-muvi: CXX_EXECUTABLE_LINKER__llvm-my-muvi_Debug tools/CMakeFiles/llvm-my-muvi.dir/llvm-muvi-detector.cpp.o | tools/libdgllvmslicer.dylib lib/libdgllvmsdg.dylib /Users/wzxpc/Downloads/jsoncpp-master/build/lib/libjsoncpp.dylib lib/libdgllvmdg.dylib lib/libdgllvmthreadregions.dylib lib/libdgllvmcda.dylib lib/libdgcda.dylib lib/libdgsdg.dylib lib/libdgllvmdda.dylib lib/libdgdda.dylib lib/libdgllvmforkjoin.dylib lib/libdgllvmpta.dylib lib/libdgpta.dylib lib/libdganalysis.dylib /opt/homebrew/opt/llvm@11/lib/libLLVM.dylib || lib/libdganalysis.dylib lib/libdgcda.dylib lib/libdgdda.dylib lib/libdgllvmcda.dylib lib/libdgllvmdda.dylib lib/libdgllvmdg.dylib lib/libdgllvmforkjoin.dylib lib/libdgllvmpta.dylib lib/libdgllvmsdg.dylib lib/libdgllvmthreadregions.dylib lib/libdgpta.dylib lib/libdgsdg.dylib tools/libdgllvmslicer.dylib
+  FLAGS = -std=c++14 -fno-rtti -Wall -Wextra -fno-exceptions -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk
+  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/llvm@11/lib -Wl,-rpath,/Users/wzxpc/Downloads/myproject/dg-master/cmake-build-debug/tools -Wl,-rpath,/Users/wzxpc/Downloads/myproject/dg-master/cmake-build-debug/lib -Wl,-rpath,/Users/wzxpc/Downloads/jsoncpp-master/build/lib  tools/libdgllvmslicer.dylib  lib/libdgllvmsdg.dylib  /Users/wzxpc/Downloads/jsoncpp-master/build/lib/libjsoncpp.dylib  lib/libdgllvmdg.dylib  lib/libdgllvmthreadregions.dylib  lib/libdgllvmcda.dylib  lib/libdgcda.dylib  lib/libdgsdg.dylib  lib/libdgllvmdda.dylib  lib/libdgdda.dylib  lib/libdgllvmforkjoin.dylib  lib/libdgllvmpta.dylib  lib/libdgpta.dylib  lib/libdganalysis.dylib  /opt/homebrew/opt/llvm@11/lib/libLLVM.dylib
+  LINK_PATH = -L/opt/homebrew/opt/llvm@11/lib
+  OBJECT_DIR = tools/CMakeFiles/llvm-my-muvi.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tools/llvm-my-muvi
+  TARGET_PDB = llvm-my-muvi.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target llvm-my-tool
+
+
+#############################################
+# Order-only phony target for llvm-my-tool
+
+build cmake_object_order_depends_target_llvm-my-tool: phony || cmake_object_order_depends_target_dganalysis cmake_object_order_depends_target_dgcda cmake_object_order_depends_target_dgdda cmake_object_order_depends_target_dgllvmcda cmake_object_order_depends_target_dgllvmdda cmake_object_order_depends_target_dgllvmdg cmake_object_order_depends_target_dgllvmforkjoin cmake_object_order_depends_target_dgllvmpta cmake_object_order_depends_target_dgllvmsdg cmake_object_order_depends_target_dgllvmslicer cmake_object_order_depends_target_dgllvmthreadregions cmake_object_order_depends_target_dgpta cmake_object_order_depends_target_dgsdg
+
+build tools/CMakeFiles/llvm-my-tool.dir/llvm-tools-count.cpp.o: CXX_COMPILER__llvm-my-tool_Debug /Users/wzxpc/Downloads/myproject/dg-master/tools/llvm-tools-count.cpp || cmake_object_order_depends_target_llvm-my-tool
+  DEFINES = -DDEBUG_ENABLED -DENABLE_CFG
+  DEP_FILE = tools/CMakeFiles/llvm-my-tool.dir/llvm-tools-count.cpp.o.d
+  FLAGS = -std=c++14 -fno-rtti -Wall -Wextra -fno-exceptions -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fcolor-diagnostics   -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -std=c++14
+  INCLUDES = -I/Users/wzxpc/Downloads/myproject/dg-master/include -I/Users/wzxpc/Downloads/myproject/dg-master/lib -I/Users/wzxpc/Downloads/myproject/dg-master/tools/include -I/Users/wzxpc/Downloads/myproject/dg-master/cmake-build-debug/tools -I/Users/wzxpc/Downloads/jsoncpp-master/include/json -isystem /opt/homebrew/opt/llvm@11/include
+  OBJECT_DIR = tools/CMakeFiles/llvm-my-tool.dir
+  OBJECT_FILE_DIR = tools/CMakeFiles/llvm-my-tool.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target llvm-my-tool
+
+
+#############################################
+# Link the executable tools/llvm-my-tool
+
+build tools/llvm-my-tool: CXX_EXECUTABLE_LINKER__llvm-my-tool_Debug tools/CMakeFiles/llvm-my-tool.dir/llvm-tools-count.cpp.o | tools/libdgllvmslicer.dylib lib/libdgllvmsdg.dylib /Users/wzxpc/Downloads/jsoncpp-master/build/lib/libjsoncpp.dylib lib/libdgllvmdg.dylib lib/libdgllvmthreadregions.dylib lib/libdgllvmcda.dylib lib/libdgcda.dylib lib/libdgsdg.dylib lib/libdgllvmdda.dylib lib/libdgdda.dylib lib/libdgllvmforkjoin.dylib lib/libdgllvmpta.dylib lib/libdgpta.dylib lib/libdganalysis.dylib /opt/homebrew/opt/llvm@11/lib/libLLVM.dylib || lib/libdganalysis.dylib lib/libdgcda.dylib lib/libdgdda.dylib lib/libdgllvmcda.dylib lib/libdgllvmdda.dylib lib/libdgllvmdg.dylib lib/libdgllvmforkjoin.dylib lib/libdgllvmpta.dylib lib/libdgllvmsdg.dylib lib/libdgllvmthreadregions.dylib lib/libdgpta.dylib lib/libdgsdg.dylib tools/libdgllvmslicer.dylib
+  FLAGS = -std=c++14 -fno-rtti -Wall -Wextra -fno-exceptions -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk
+  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/llvm@11/lib -Wl,-rpath,/Users/wzxpc/Downloads/myproject/dg-master/cmake-build-debug/tools -Wl,-rpath,/Users/wzxpc/Downloads/myproject/dg-master/cmake-build-debug/lib -Wl,-rpath,/Users/wzxpc/Downloads/jsoncpp-master/build/lib  tools/libdgllvmslicer.dylib  lib/libdgllvmsdg.dylib  /Users/wzxpc/Downloads/jsoncpp-master/build/lib/libjsoncpp.dylib  lib/libdgllvmdg.dylib  lib/libdgllvmthreadregions.dylib  lib/libdgllvmcda.dylib  lib/libdgcda.dylib  lib/libdgsdg.dylib  lib/libdgllvmdda.dylib  lib/libdgdda.dylib  lib/libdgllvmforkjoin.dylib  lib/libdgllvmpta.dylib  lib/libdgpta.dylib  lib/libdganalysis.dylib  /opt/homebrew/opt/llvm@11/lib/libLLVM.dylib
+  LINK_PATH = -L/opt/homebrew/opt/llvm@11/lib
+  OBJECT_DIR = tools/CMakeFiles/llvm-my-tool.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tools/llvm-my-tool
+  TARGET_PDB = llvm-my-tool.dbg
+
 
 #############################################
 # Utility command for test
@@ -3136,6 +3206,10 @@ build llvm-dg-test: phony tests/llvm-dg-test
 
 build llvm-my-detector: phony tools/llvm-my-detector
 
+build llvm-my-muvi: phony tools/llvm-my-muvi
+
+build llvm-my-tool: phony tools/llvm-my-tool
+
 build llvm-my-visit: phony tools/llvm-my-visit
 
 build llvm-my-work: phony tools/llvm-my-work
@@ -3212,7 +3286,7 @@ build tests/slicing/all: phony
 #############################################
 # Folder: /Users/wzxpc/Downloads/myproject/dg-master/cmake-build-debug/tools
 
-build tools/all: phony tools/llvm-dg-dump tools/libdgllvmslicer.dylib tools/llvm-slicer tools/llvm-sdg-dump tools/llvm-cg-dump tools/llvm-cda-dump tools/llvm-cda-bench tools/llvm-cda-stress tools/llvm-pta-dump tools/llvm-pta-ben tools/llvm-pta-compare tools/llvm-dda-dump tools/llvm-vr-dump tools/llvm-to-source tools/llvm-thread-regions-dump tools/llvm-ntscd-dump tools/llvm-my-visit tools/llvm-my-work tools/llvm-my-detector
+build tools/all: phony tools/llvm-dg-dump tools/libdgllvmslicer.dylib tools/llvm-slicer tools/llvm-sdg-dump tools/llvm-cg-dump tools/llvm-cda-dump tools/llvm-cda-bench tools/llvm-cda-stress tools/llvm-pta-dump tools/llvm-pta-ben tools/llvm-pta-compare tools/llvm-dda-dump tools/llvm-vr-dump tools/llvm-to-source tools/llvm-thread-regions-dump tools/llvm-ntscd-dump tools/llvm-my-visit tools/llvm-my-work tools/llvm-my-detector tools/llvm-my-muvi tools/llvm-my-tool
 
 # =============================================================================
 # Unknown Build Time Dependencies.

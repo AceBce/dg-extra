@@ -176,3 +176,17 @@ target_link_libraries(llvm-my-detector PRIVATE dgllvmslicer
 		PRIVATE ${llvm_irreader}
 		PRIVATE /Users/wzxpc/Downloads/jsoncpp-master/build/lib/libjsoncpp.dylib
 		)
+add_executable(llvm-my-muvi llvm-muvi-detector.cpp)
+target_link_libraries(llvm-my-muvi PRIVATE dgllvmslicer
+		PRIVATE dgllvmsdg
+		PRIVATE ${SVF_LIBS}
+		PRIVATE ${llvm_irreader}
+		PRIVATE /Users/wzxpc/Downloads/jsoncpp-master/build/lib/libjsoncpp.dylib
+		)
+add_executable(llvm-my-tool llvm-tools-count.cpp)
+target_link_libraries(llvm-my-tool PRIVATE dgllvmslicer
+		PRIVATE dgllvmsdg
+		PRIVATE ${SVF_LIBS}
+		PRIVATE ${llvm_irreader}
+		PRIVATE /Users/wzxpc/Downloads/jsoncpp-master/build/lib/libjsoncpp.dylib
+		)
