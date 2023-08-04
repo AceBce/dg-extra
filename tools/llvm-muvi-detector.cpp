@@ -374,9 +374,13 @@ int main(int argc, char *argv[]) {
         func->setEndLine(endline);
         allfunc.push_back(func);
     }
-    for (auto &r : AllRecord) {
-        outs() << r->getName() << " " << r->getLine() << " " << r->getType() << "\n";
-    }
+//    for (auto &r : AllRecord) {
+//        outs() << r->getName() << " " << r->getLine() << " " << r->getType() << "\n";
+//    }
+    sort(AllRecord.begin(), AllRecord.end(), [&] (Record *a, Record *b) {
+        return a->getLine() >= b->getLine();
+    });
+
     for (auto &f : allfunc) {
         for (int line = f->getStartLine(); line <= f->getEndLine(); line++) {
             set<Record*> temp;
@@ -398,12 +402,12 @@ int main(int argc, char *argv[]) {
     for (auto &rset : closeRecord) {
         set<int> idset;
         for (auto &r : rset) {
-            outs() << r->getName() << " " << r->getId() << "\n";
+//            outs() << r->getName() << " " << r->getId() << "\n";
             idset.insert(r->getId());
         }
-        for (auto &id : idset) {
-            output << id << " ";
-        }
+//        for (auto &id : idset) {
+//            output << id << " ";
+//        }
         output << "\n";
         outs() << "--------------------\n";
     }
