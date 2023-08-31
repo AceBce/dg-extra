@@ -152,7 +152,7 @@ if (ENABLE_CFG)
 	add_definitions(-DENABLE_CFG)
 endif()
 
-set(CMAKE_CXX_COMPILER "/opt/homebrew/Cellar/llvm@11/11.1.0_4/bin/clang++")
+#set(CMAKE_CXX_COMPILER "/opt/homebrew/Cellar/llvm@11/11.1.0_4/bin/clang++")
 message(STATUS "Using compiler: ${CMAKE_CXX_COMPILER}")
 
 

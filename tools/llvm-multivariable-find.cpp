@@ -16,6 +16,7 @@
 #else
 #include <llvm/Bitcode/ReaderWriter.h>
 #endif
+#include <chrono>
 
 #include <llvm/IR/InstIterator.h>
 #include <llvm/IR/Instructions.h>
@@ -115,6 +116,7 @@ void Dep(llvmdg::SystemDependenceGraph &sdg, GlobalVar *Gvar);
 void controldep(llvmdg::SystemDependenceGraph &sdg, dg::sdg::DGNode *node, GlobalVar *Gvar);
 void datadep(llvmdg::SystemDependenceGraph &sdg, dg::sdg::DGNode *node, GlobalVar *Gvar);
 int main(int argc, char *argv[]) {
+    auto start_time = std::chrono::steady_clock::now();
     setupStackTraceOnError(argc, argv);
     SlicerOptions options = parseSlicerOptions(argc, argv);
 
@@ -690,7 +692,12 @@ int main(int argc, char *argv[]) {
         std::cout << "所有变量的数量: " << Gvarnum + Avarnum << "\n";
         std::cout << "局部变量的数量: " << Avarnum << "\n";
         std::cout << "全局变量的数量: " << Gvarnum << "\n";
+        std::cout << "aa: " << globals.size() << "\n";
         output.close();
+        auto end_time = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+
+        std::cout << "程序运行时间长度：" << duration << " 毫秒" << std::endl;
     return 0;
 }
 bool isStructArray(Type* type) {

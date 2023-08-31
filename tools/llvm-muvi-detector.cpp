@@ -39,6 +39,7 @@
 #include "dg/tools/llvm-slicer-utils.h"
 
 #include "dg/util/TimeMeasure.h"
+#include <chrono>
 
 llvm::cl::opt<bool> enable_debug(
         "dbg", llvm::cl::desc("Enable debugging messages (default=false)."),
@@ -61,7 +62,7 @@ class Record{
     int id;
   public:
     Record() {}
-    Record(string name) : name(name) {}
+    Record(string name) : name(name) { linelocation = 9999;}
     Record(string name, int linelocation, RWtype type)
             : name(std::move(name)), linelocation(linelocation), type(type) {}
 
@@ -76,6 +77,15 @@ class Record{
             return a->getName() != b->getName();
         }
     };
+    string toString() {
+        string str;
+        str += name;
+        str += " ";
+        str += to_string(linelocation);
+        str += " ";
+        str += to_string(type);
+        return str;
+    }
 };
 class FuncVariable {
     string funcName;
@@ -130,6 +140,15 @@ class CloseVariable{
     set<string> variables;
 
 };
+bool isprime(int a) {
+        if (a == 1)
+                return false;
+        for (int i = 2; i <= sqrt(a); i++) {
+                if (a % i == 0)
+                return false;
+        }
+        return true;
+}
 bool isStructArray(Type* type) {
     if (ArrayType* arrayType = dyn_cast<ArrayType>(type)) {
         Type* elementType = arrayType->getElementType();
@@ -152,6 +171,7 @@ vector<set<string>>nameinall;
 vector<set<int>>idinall;
 vector<FuncVariable*> allfunc;
 int main(int argc, char *argv[]) {
+    auto start_time = std::chrono::steady_clock::now();
     setupStackTraceOnError(argc, argv);
     SlicerOptions options = parseSlicerOptions(argc, argv);
 
@@ -170,6 +190,7 @@ int main(int argc, char *argv[]) {
                      << options.dgOptions.entryFunction << "\n";
         return 1;
     }
+
     for (auto &F : *M) {
         FuncVariable *func = new FuncVariable(F.getName().str()); // 创建一个收集函数里所有全局变量的东西
         auto subprogram = F.getSubprogram();
@@ -222,7 +243,7 @@ int main(int argc, char *argv[]) {
                                 }
                                 func->addVariable(record);
                             }
-                            if (isa<GEPOperator>(op)) {
+                            else if (isa<GEPOperator>(op)) {
                                 GEPOperator *GEPOp = dyn_cast<GEPOperator>(op);
                                 int num = GEPOp->getNumOperands();
                                 int level = num - 2; //剩下的是偏移的层数
@@ -320,6 +341,7 @@ int main(int argc, char *argv[]) {
                                         func->addVariable(record);
                                     }
                                     else if (auto *ST = dyn_cast<StructType>(PT->getElementType())) {
+//                                        outs() << "结构体\n";
                                         //是结构体
                                         string structname = std::move(fullname);
                                         //成员的名称
@@ -349,6 +371,7 @@ int main(int argc, char *argv[]) {
                                             }
                                         }
                                         fullname = structname + fieldname;
+                                        outs() << fullname << "\n";
                                         if (fullname.find('[') == string::npos)
                                             continue;
                                         Record *record = new Record(fullname, line, type);
@@ -370,30 +393,43 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+
         func->setStartLine(startline);
         func->setEndLine(endline);
         allfunc.push_back(func);
     }
+//    outs() << "383\n";
 //    for (auto &r : AllRecord) {
 //        outs() << r->getName() << " " << r->getLine() << " " << r->getType() << "\n";
 //    }
-    sort(AllRecord.begin(), AllRecord.end(), [&] (Record *a, Record *b) {
+    outs() << AllRecord.size() << "\n";
+    sort(AllRecord.begin(), AllRecord.end(), [&] (Record *a, Record *b) -> bool {
+        if (!a)
+            return false;
+        if (!b)
+            return true;
+        outs() << a->getName() << " " << b->getName() << "\n";
+        outs() << a->getLine() << " " << b->getLine() << "\n";
         return a->getLine() >= b->getLine();
     });
-
     for (auto &f : allfunc) {
         for (int line = f->getStartLine(); line <= f->getEndLine(); line++) {
             set<Record*> temp;
             for (auto r : f->getVariables()) {
                 int theline = r->getLine();
-                if (theline > line + linedistance || theline > f->getEndLine())
+                if (theline >= line + linedistance || theline > f->getEndLine())
                     break ;
                 if (theline < line)
                     continue;
                 temp.insert(r);
+
             }
             if (temp.size()) {
                 closeRecord.push_back(temp);
+                for (auto &r: temp) {
+                    outs() << r->getName() << " " << r->getLine() << "\n";
+                }
+                outs() << "--------------------\n";
             }
         }
     }
@@ -402,15 +438,16 @@ int main(int argc, char *argv[]) {
     for (auto &rset : closeRecord) {
         set<int> idset;
         for (auto &r : rset) {
-//            outs() << r->getName() << " " << r->getId() << "\n";
+            outs() << r->getName() << " " << r->getId() << "\n";
             idset.insert(r->getId());
         }
-//        for (auto &id : idset) {
-//            output << id << " ";
-//        }
+        for (auto &id : idset) {
+            output << id << " ";
+        }
         output << "\n";
         outs() << "--------------------\n";
     }
+
     string javacmd = "java -jar \"/Users/wzxpc/Downloads/myproject/dg-master/tools/spmf-1.7.jar\" run \"Closed_association_rules(using_fpclose)\"";
     javacmd += " \"" + outputpath + "\"";
     string minningresultpath = "/Users/wzxpc/Desktop/minningresult.txt";
@@ -420,13 +457,19 @@ int main(int argc, char *argv[]) {
     javacmd += " \"" + support + "\" \"" + conf + "\"";
     system(javacmd.c_str());
     ifstream minningresult(minningresultpath);
-    ofstream output2("/Users/wzxpc/Desktop/output2.txt");
+    ofstream output2("/Users/wzxpc/Desktop/output3.txt");
     if (!output2.is_open()) {
         outs() << "open failed\n";
         return 0;
     }
     string line;
     vector<SequenceData*> Seqs;
+    int num = 0;
+    ofstream outid2name("/Users/wzxpc/Desktop/id2name.txt");
+    for (auto &p : id2name) {
+        outid2name << p.first << " " << p.second << "\n";
+    }
+    outid2name.close();
     while (getline(minningresult, line)) {
         auto pos = line.find('#');
         SequenceData *sequenceData = new SequenceData(line);
@@ -453,16 +496,25 @@ int main(int argc, char *argv[]) {
         cout << line << "\n";
 
     }
-
     sort(Seqs.begin(), Seqs.end(), [](SequenceData *a, SequenceData *b) {
-        if (a->getSup() != b->getSup())
-            return a->getSup() > b->getSup();
-        return a->getConf() > b->getConf();
+        if (a->getConf() != b->getConf())
+            return a->getConf() > b->getConf();
+        return a->getSup() > b->getSup();
     });
     for (auto &Seq : Seqs) {
+        if (isprime(num)) {
+            num++;
+            continue ;
+        }
+
         output2 << Seq->getSequence() << "\n";
+
     }
     output2.close();
+    auto end_time = std::chrono::steady_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+
+    std::cout << "程序运行时间长度：" << duration << " 毫秒" << std::endl;
     return 0;
 }
 // afs
