@@ -34,7 +34,6 @@ using namespace std;
 using namespace llvm;
 
 using llvm::errs;
-
 class GlobalVar {
     string name;//变量名
     int type; //type = 1是普通变量, type = 2是数组变量， type = 3是结构体变量

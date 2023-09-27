@@ -403,7 +403,7 @@ int main(int argc, char *argv[]) {
 //        outs() << r->getName() << " " << r->getLine() << " " << r->getType() << "\n";
 //    }
     outs() << AllRecord.size() << "\n";
-    sort(AllRecord.begin(), AllRecord.end(), [&] (Record *a, Record *b) -> bool {
+    std::sort(AllRecord.begin(), AllRecord.end(), [&] (Record *a, Record *b) -> bool {
         if (!a)
             return false;
         if (!b)
@@ -496,7 +496,7 @@ int main(int argc, char *argv[]) {
         cout << line << "\n";
 
     }
-    sort(Seqs.begin(), Seqs.end(), [](SequenceData *a, SequenceData *b) {
+    std::sort(Seqs.begin(), Seqs.end(), [](SequenceData *a, SequenceData *b) {
         if (a->getConf() != b->getConf())
             return a->getConf() > b->getConf();
         return a->getSup() > b->getSup();
